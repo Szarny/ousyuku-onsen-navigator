@@ -2,10 +2,10 @@
  * モジュールのインポート
  */
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, Linking } from 'react-native';
 import { Container, Content, List, ListItem, Left, Body, Right, Thumbnail, Text } from 'native-base'; // 2.3.8
-import { Constants, MapView, Marker } from 'expo';
-import { StackNavigator } from 'react-navigation';
+import { Constants, MapView } from 'expo';
+import { StackNavigator } from 'react-navigation'; // 1.0.3
 
 /**
  * ホーム画面
@@ -28,7 +28,7 @@ export class HomeScreen extends Component {
         <ListItem
           avatar
           key={index.toString()}
-          onPress={() => this.props.navigation.navigate('HotSpa')}
+          onPress={() => this.props.navigation.navigate(listItem.link)}
         >
           <Left>
             <Thumbnail source={{ uri: listItem.thumbnailSourceUri }} />
@@ -175,6 +175,101 @@ export class MapScreen extends Component {
 }
 
 /**
+* ケキョきち画面
+*/
+export class KekyokichiScreen extends Component {
+  static navigationOptions = {
+    title: 'kekyokichi'
+  };
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    /**
+     * homeListItemsをmapによって，エレメント群に変換する
+     */
+    const listItemsElements = kekyokichiListItems.map((listItem, index) => {
+      let uri = (index === 0 ? listItem.twitterUri : listItem.facebookUri)
+      return (
+        <ListItem
+          avatar
+          key={index.toString()}
+          onPress={() => {Linking.openURL(uri)}}>
+          <Left>
+            <Thumbnail source={{ uri: listItem.thumbnailSourceUri }} />
+          </Left>
+          <Body>
+            <Text>{listItem.bodyText}</Text>
+            <Text note>{listItem.bodyNote}</Text>
+          </Body>
+        </ListItem>
+      )
+    });
+
+    return (
+      <Container style={styles.containerStyle}>
+        <Content>
+          <List>
+            {listItemsElements}
+          </List>
+        </Content>
+      </Container>
+    );
+  }
+}
+
+/**
+* しずくちゃん画面
+*/
+export class ShizukuScreen extends Component {
+  static navigationOptions = {
+    title: 'shizuku'
+  };
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    /**
+     * homeListItemsをmapによって，エレメント群に変換する
+     */
+    const listItemsElements = shizukuListItems.map((listItem, index) => {
+      let uri = (index === 0 ? listItem.twitterUri : listItem.facebookUri)
+      return (
+        <ListItem
+          avatar
+          key={index.toString()}
+          onPress={() => Linking.openURL(uri)}>
+          <Left>
+            <Thumbnail source={{ uri: listItem.thumbnailSourceUri }} />
+          </Left>
+          <Body>
+            <Text>{index}{listItem.bodyText}</Text>
+            <Text note>{listItem.bodyNote}</Text>
+          </Body>
+        </ListItem>
+      )
+    });
+
+    return (
+      <Container style={styles.containerStyle}>
+        <Content>
+          <List>
+            {listItemsElements}
+          </List>
+          <Image
+            style={{flex: 1, alignItems: "center", justifyContent: "center", width: 300, height: 300}}
+            source={{uri: "https://pbs.twimg.com/profile_images/1022033539/5332dcb0-7dc2-4a31-ab4e-4148953f0667_400x400.jpg"}}/>
+        </Content>
+      </Container>
+    );
+  }
+}
+
+/**
  * Navigation(画面遷移)の設定
  */
 export default StackNavigator(
@@ -188,6 +283,12 @@ export default StackNavigator(
     Map: {
       screen: MapScreen,
     },
+    Shizuku: {
+      screen: ShizukuScreen,
+    },
+    Kekyokichi: {
+      screen: KekyokichiScreen,
+    }
   },
   {
     initialRouteName: 'Home',
@@ -201,27 +302,33 @@ const homeListItems = [
   {
     thumbnailSourceUri: "https://goo.gl/cfnrV5",
     bodyText: "日帰り温泉入浴施設",
-    bodyNote: "One-day hot spring bathing facilities"
+    bodyNote: "One-day hot spring bathing facilities",
+    link: "HotSpa"
   }, {
     thumbnailSourceUri: "https://goo.gl/N3A7fG",
     bodyText: "温泉宿泊施設",
-    bodyNote: "Hot spring accommodation"
+    bodyNote: "Hot spring accommodation",
+    link: ""
   }, {
     thumbnailSourceUri: "https://goo.gl/DDtx3i",
     bodyText: "食事処＆休憩処",
-    bodyNote: "Meals and breaks"
+    bodyNote: "Meals and breaks",
+    link:""
   }, {
     thumbnailSourceUri: "https://umekiki.jp/images/events/ico-etc-l.png",
     bodyText: "その他",
-    bodyNote: "Others"
+    bodyNote: "Others",
+    link: ""
   }, {
     thumbnailSourceUri: "https://pbs.twimg.com/profile_images/1022033539/5332dcb0-7dc2-4a31-ab4e-4148953f0667_400x400.jpg",
     bodyText: "しずくちゃん",
-    bodyNote: "Shizuku-chan relation"
+    bodyNote: "Shizuku-chan relation",
+    link: "Shizuku"
   }, {
     thumbnailSourceUri: "https://pbs.twimg.com/profile_images/726635752197525504/sjMs4APZ_400x400.jpg",
     bodyText: "ケキョきち君",
-    bodyNote: "Kekyo Kichi-kun's relation"
+    bodyNote: "Kekyo Kichi-kun's relation",
+    link: "Kekyokichi"
   },
 ];
 
@@ -249,6 +356,40 @@ const hotSpaListItems = [
     lat: 39.636090,
     lng: 140.921975
   }
+];
+
+/**
+* ケキョきちくん関連のデータ
+*/
+const kekyokichiListItems = [
+  {
+    thumbnailSourceUri: "https://stat.ameba.jp/user_images/20180223/12/minnnanoyoutube/6b/22/p/o0300030014137041198.png",
+    bodyText: "Twitter",
+    bodyNote: "Check Kekyokichi's tweet",
+    twitterUri: "https://twitter.com/machitane_shizu",
+    facebookUri: "https://www.facebook.com/machitane.shizu/"
+  }, {
+    thumbnailSourceUri: "https://www.facebook.com/images/fb_icon_325x325.png",
+    bodyText: "Facebook",
+    bodyNote: "Check Kekyokichi's Facebook",
+    twitterUri: "https://twitter.com/ousyukuonsen",
+    facebookUri: "https://www.facebook.com/kekyokichi/"
+  },
+];
+
+/**
+* しずくちゃん関連のデータ
+*/
+const shizukuListItems = [
+  {
+    thumbnailSourceUri: "https://stat.ameba.jp/user_images/20180223/12/minnnanoyoutube/6b/22/p/o0300030014137041198.png",
+    bodyText: "Twitter",
+    bodyNote: "Check Shizuku-chan's tweet"
+  }, {
+    thumbnailSourceUri: "https://www.facebook.com/images/fb_icon_325x325.png",
+    bodyText: "Facebook",
+    bodyNote: "Check Shizuku-chan's Facebook"
+  },
 ];
 
 /**
