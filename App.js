@@ -2,7 +2,7 @@
  * モジュールのインポート
  */
 import React, { Component } from 'react';
-import { Image, Linking } from 'react-native';
+import { Image, Linking, View } from 'react-native';
 import { Container, Content, List, ListItem, Left, Body, Right, Thumbnail, Text } from 'native-base'; // 2.3.8
 import { Constants, MapView } from 'expo';
 import { StackNavigator } from 'react-navigation'; // 1.0.3
@@ -179,7 +179,7 @@ export class MapScreen extends Component {
 */
 export class KekyokichiScreen extends Component {
   static navigationOptions = {
-    title: 'kekyokichi'
+    title: 'Kekyokichi'
   };
 
   constructor(props) {
@@ -195,12 +195,12 @@ export class KekyokichiScreen extends Component {
         <ListItem
           avatar
           key={index.toString()}
-          onPress={() => Linking.openURL(listItem.linkUri)}>
+          onPress={() => {Linking.openURL(listItem.linkUri)}}>
           <Left>
             <Thumbnail source={{ uri: listItem.thumbnailSourceUri }} />
           </Left>
           <Body>
-            <Text>{listItem.bodyText}</Text>
+            <Text>{listItem.bodyText} {listItem.account}</Text>
             <Text note>{listItem.bodyNote}</Text>
           </Body>
         </ListItem>
@@ -213,6 +213,11 @@ export class KekyokichiScreen extends Component {
           <List>
             {listItemsElements}
           </List>
+          <View style={{flex: 1, justifyContent: "center", alignItems: "center", marginTop: 20}}>
+            <Image
+              style={{width: 300, height: 400}}
+              source={{ uri: "https://i.imgur.com/0cO8d4a.jpg" }} />
+          </View>
         </Content>
       </Container>
     );
@@ -224,7 +229,7 @@ export class KekyokichiScreen extends Component {
 */
 export class ShizukuScreen extends Component {
   static navigationOptions = {
-    title: 'shizuku'
+    title: 'Shizuku-chan'
   };
 
   constructor(props) {
@@ -245,7 +250,7 @@ export class ShizukuScreen extends Component {
             <Thumbnail source={{ uri: listItem.thumbnailSourceUri }} />
           </Left>
           <Body>
-            <Text>{listItem.bodyText}</Text>
+            <Text>{listItem.bodyText} {listItem.account}</Text>
             <Text note>{listItem.bodyNote}</Text>
           </Body>
         </ListItem>
@@ -258,9 +263,11 @@ export class ShizukuScreen extends Component {
           <List>
             {listItemsElements}
           </List>
-          <Image
-            style={{flex: 1, alignItems: "center", justifyContent: "center", width: 300, height: 300}}
-            source={{uri: "https://pbs.twimg.com/profile_images/1022033539/5332dcb0-7dc2-4a31-ab4e-4148953f0667_400x400.jpg"}}/>
+            <View style={{flex: 1, justifyContent: "center", alignItems: "center", marginTop: 20}}>
+              <Image
+                style={{width: 300, height: 400}}
+                source={{ uri: "https://imgur.com/ZL3VZta.jpg" }} />
+            </View>
         </Content>
       </Container>
     );
@@ -361,15 +368,16 @@ const hotSpaListItems = [
 */
 const kekyokichiListItems = [
   {
-    thumbnailSourceUri: "http://icons.iconarchive.com/icons/sicons/basic-round-social/512/twitter-icon.png",
+    thumbnailSourceUri: "https://goo.gl/9jZzmm",
     bodyText: "Twitter",
+    account: "@ousyukuonsen",
     bodyNote: "Check Kekyokichi's tweet",
     linkUri: "https://twitter.com/ousyukuonsen",
   }, {
-    thumbnailSourceUri: "https://www.facebook.com/images/fb_icon_325x325.png",
+    thumbnailSourceUri: "https://goo.gl/8LSpGa",
     bodyText: "Facebook",
     bodyNote: "Check Kekyokichi's Facebook",
-    linkUri: "https://www.facebook.com/kekyokichi/",
+    linkUri: "https://www.facebook.com/kekyokichi/"
   },
 ];
 
@@ -378,15 +386,16 @@ const kekyokichiListItems = [
 */
 const shizukuListItems = [
   {
-    thumbnailSourceUri: "http://icons.iconarchive.com/icons/sicons/basic-round-social/512/twitter-icon.png",
+    thumbnailSourceUri: "https://goo.gl/9jZzmm",
     bodyText: "Twitter",
+    account: "@Machitane_Shizu",
     bodyNote: "Check Shizuku-chan's tweet",
     linkUri: "https://twitter.com/machitane_shizu",
   }, {
-    thumbnailSourceUri: "https://www.facebook.com/images/fb_icon_325x325.png",
+    thumbnailSourceUri: "https://goo.gl/8LSpGa",
     bodyText: "Facebook",
     bodyNote: "Check Shizuku-chan's Facebook",
-    linkUri: "https://www.facebook.com/machitane.shizu/",
+    linkUri: "https://www.facebook.com/machitane.shizu/"
   },
 ];
 
