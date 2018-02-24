@@ -191,12 +191,11 @@ export class KekyokichiScreen extends Component {
      * homeListItemsをmapによって，エレメント群に変換する
      */
     const listItemsElements = kekyokichiListItems.map((listItem, index) => {
-      let uri = (index === 0 ? listItem.twitterUri : listItem.facebookUri)
       return (
         <ListItem
           avatar
           key={index.toString()}
-          onPress={() => {Linking.openURL(uri)}}>
+          onPress={() => Linking.openURL(listItem.linkUri)}>
           <Left>
             <Thumbnail source={{ uri: listItem.thumbnailSourceUri }} />
           </Left>
@@ -237,17 +236,16 @@ export class ShizukuScreen extends Component {
      * homeListItemsをmapによって，エレメント群に変換する
      */
     const listItemsElements = shizukuListItems.map((listItem, index) => {
-      let uri = (index === 0 ? listItem.twitterUri : listItem.facebookUri)
       return (
         <ListItem
           avatar
           key={index.toString()}
-          onPress={() => Linking.openURL(uri)}>
+          onPress={() => Linking.openURL(listItem.linkUri)}>
           <Left>
             <Thumbnail source={{ uri: listItem.thumbnailSourceUri }} />
           </Left>
           <Body>
-            <Text>{index}{listItem.bodyText}</Text>
+            <Text>{listItem.bodyText}</Text>
             <Text note>{listItem.bodyNote}</Text>
           </Body>
         </ListItem>
@@ -363,17 +361,15 @@ const hotSpaListItems = [
 */
 const kekyokichiListItems = [
   {
-    thumbnailSourceUri: "https://stat.ameba.jp/user_images/20180223/12/minnnanoyoutube/6b/22/p/o0300030014137041198.png",
+    thumbnailSourceUri: "http://icons.iconarchive.com/icons/sicons/basic-round-social/512/twitter-icon.png",
     bodyText: "Twitter",
     bodyNote: "Check Kekyokichi's tweet",
-    twitterUri: "https://twitter.com/machitane_shizu",
-    facebookUri: "https://www.facebook.com/machitane.shizu/"
+    linkUri: "https://twitter.com/ousyukuonsen",
   }, {
     thumbnailSourceUri: "https://www.facebook.com/images/fb_icon_325x325.png",
     bodyText: "Facebook",
     bodyNote: "Check Kekyokichi's Facebook",
-    twitterUri: "https://twitter.com/ousyukuonsen",
-    facebookUri: "https://www.facebook.com/kekyokichi/"
+    linkUri: "https://www.facebook.com/kekyokichi/",
   },
 ];
 
@@ -382,13 +378,15 @@ const kekyokichiListItems = [
 */
 const shizukuListItems = [
   {
-    thumbnailSourceUri: "https://stat.ameba.jp/user_images/20180223/12/minnnanoyoutube/6b/22/p/o0300030014137041198.png",
+    thumbnailSourceUri: "http://icons.iconarchive.com/icons/sicons/basic-round-social/512/twitter-icon.png",
     bodyText: "Twitter",
-    bodyNote: "Check Shizuku-chan's tweet"
+    bodyNote: "Check Shizuku-chan's tweet",
+    linkUri: "https://twitter.com/machitane_shizu",
   }, {
     thumbnailSourceUri: "https://www.facebook.com/images/fb_icon_325x325.png",
     bodyText: "Facebook",
-    bodyNote: "Check Shizuku-chan's Facebook"
+    bodyNote: "Check Shizuku-chan's Facebook",
+    linkUri: "https://www.facebook.com/machitane.shizu/",
   },
 ];
 
