@@ -1,0 +1,1 @@
+# ousyuku-onsen-navigator
